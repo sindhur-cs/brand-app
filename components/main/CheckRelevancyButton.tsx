@@ -1,10 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button"
 
 const CheckRelevancyButton = () => {
+  const router = useRouter();
+
   const handleCheckRelevancy = () => {
-    console.log("Check Relevancy");
+    router.push("/assess-result");
   }
 
   return (

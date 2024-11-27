@@ -24,8 +24,8 @@ const ColorPicker = ({ value, onChange }: { value: string[], onChange: (value: s
     <>
     {value.length > 0 && <div className="flex flex-wrap gap-2 text-sm pb-4">
             {value.map((keyword) => (
-            <div key={keyword} className="flex items-center gap-1.5 p-2.5 rounded-2xl" style={{color: keyword}}>
-                {keyword}
+            <div key={keyword} className="flex items-center gap-1.5 p-2.5 rounded-2xl">
+                <p style={{color: keyword}}>{keyword}</p>
                 <X className="cursor-pointer h-4 w-4" onClick={() => removeValue(keyword)}/>
             </div>
             ))}
