@@ -1,4 +1,6 @@
 "use client";
+import ColorPicker from "@/components/main/ColorPicker";
+import ImagePicker from "@/components/main/ImagePicker";
 import KeywordInput from "@/components/main/KeywordInput";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -12,7 +14,11 @@ const createBrandSchema = zod.object({
     name: zod.string().min(1, { message: "Brand name is required" }),
     description: zod.string().min(100, { message: "Characters in the brand requirement should be greater than 100" }),
     values: zod.array(zod.string()).optional(),
-    attributes: zod.array(zod.string()).optional()
+    attributes: zod.array(zod.string()).optional(),
+    "primary-font": zod.string(),
+    "secondary-font": zod.string(),
+    colors: zod.array(zod.string()),
+    images: zod.array(zod.string())
 });
 
 createBrandSchema.required();
@@ -24,7 +30,11 @@ const CreateBrand = () => {
             name: "",
             description: "",
             values: [],
-            attributes: []
+            attributes: [],
+            "primary-font": "",
+            "secondary-font": "",
+            colors: [],
+            images: []
         }
     });
 
@@ -112,6 +122,82 @@ const CreateBrand = () => {
                                 <FormDescription>
                                     Provide some brief attributes of your brand.
                                 </FormDescription>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="primary-font"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Primary Font *</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter primary font name" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is your brand's primary font.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="secondary-font"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Secondary Font *</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter secondary font name" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is your brand's secondary font.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="colors"
+                        render={() => (
+                            <FormItem>
+                                <FormLabel>Pick the color palette*</FormLabel>
+                                <FormControl>
+                                    <Controller 
+                                        name="colors"
+                                        control={form.control}
+                                        render={({ field }) => (
+                                            <ColorPicker value={field.value} onChange={field.onChange}/>
+                                        )}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    This is your brand's color palette.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="colors"
+                        render={() => (
+                            <FormItem>
+                                <FormLabel>Pick the images *</FormLabel>
+                                <FormControl>
+                                    <Controller 
+                                        name="colors"
+                                        control={form.control}
+                                        render={({ field }) => (
+                                            <ImagePicker value={field.value} onChange={field.onChange}/>
+                                        )}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    This is your brand relevant images.
+                                </FormDescription>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
