@@ -1,4 +1,15 @@
-import Contentstack , { Region } from "@contentstack/delivery-sdk";
+import Contentstack, { Region } from "@contentstack/delivery-sdk";
+
+const getConfig = () => {
+  return {
+    NEXT_PUBLIC_STACK_API_KEY: process.env.NEXT_PUBLIC_STACK_API_KEY,
+    NEXT_PUBLIC_DELIVERY_TOKEN: process.env.NEXT_PUBLIC_DELIVERY_TOKEN,
+    NEXT_PUBLIC_CONTENTSTACK_REGION:
+      process.env.NEXT_PUBLIC_CONTENTSTACK_REGION,
+    NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT:
+      process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT,
+  };
+};
 
 export const initializeContentstackSdk = () => {
   const {
@@ -6,11 +17,9 @@ export const initializeContentstackSdk = () => {
     NEXT_PUBLIC_DELIVERY_TOKEN,
     NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT,
     NEXT_PUBLIC_CONTENTSTACK_REGION,
-  } = process.env;
+  } = getConfig();
 
-  const region: Region | undefined = (function (
-    regionValue: string
-  ) {
+  const region: Region | undefined = (function (regionValue: string) {
     switch (regionValue) {
       case "US":
         return Region.US;

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Label,
@@ -6,7 +6,7 @@ import {
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
-} from "recharts"
+} from "recharts";
 
 import {
   Card,
@@ -14,19 +14,24 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { ChartConfig, ChartContainer } from "@/components/ui/chart"
-import useStore from "@/app/store/store"
+} from "@/components/ui/card";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import useStore from "@/app/store/store";
 
-export default function Progress() {
+export default function Progress({ selectedBrand }: { selectedBrand: string }) {
+  console.log("Progress Rendered: Brand", selectedBrand);
   const { chatAnalysis } = useStore();
   const jsonChatAnalysis = JSON.parse(chatAnalysis || "{}");
   const score = jsonChatAnalysis?.brand_compliance_score;
 
   const chartData = [
-    { browser: "safari", visitors: 200, fill: score > 70 ? "green" : score > 40 ? "yellow" : "red" },
-  ]
-  
+    {
+      browser: "safari",
+      visitors: 200,
+      fill: score > 70 ? "green" : score > 40 ? "yellow" : "red",
+    },
+  ];
+
   const chartConfig = {
     visitors: {
       label: "Visitors",
@@ -35,12 +40,12 @@ export default function Progress() {
       label: "Safari",
       color: "hsl(var(--chart-2))",
     },
-  } satisfies ChartConfig
+  } satisfies ChartConfig;
 
   return (
     <Card className="flex flex-col my-[60px] py-10">
       <CardHeader className="items-center pb-0">
-        <CardTitle className="text-2xl">Barbie Mattel</CardTitle>
+        <CardTitle className="text-2xl">{selectedBrand}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -61,7 +66,7 @@ export default function Progress() {
               className="first:fill-muted last:fill-background"
               polarRadius={[86, 74]}
             />
-            <RadialBar dataKey="visitors" background cornerRadius={10}/>
+            <RadialBar dataKey="visitors" background cornerRadius={10} />
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
                 content={({ viewBox }) => {
@@ -88,7 +93,7 @@ export default function Progress() {
                           Relevancy Score
                         </tspan>
                       </text>
-                    )
+                    );
                   }
                 }}
               />
@@ -98,9 +103,9 @@ export default function Progress() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-            The image has a brand relevancy score of {score || 0}%
+          The image has a brand relevancy score of {score || 0}%
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

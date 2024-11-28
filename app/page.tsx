@@ -7,7 +7,6 @@ import Link from "next/link";
 const Home = async () => {
   try {
     const brands = await fetchBrands();
-    console.log(brands);
 
     return (
       <div className="flex flex-col">
@@ -19,13 +18,13 @@ const Home = async () => {
             </Button>
           </Link>
         </div>
-        {(brands.entries) && <BrandsList brands={brands.entries} />}
+        {brands.entries && <BrandsList brands={brands.entries} />}
       </div>
-    )
+    );
   } catch (error) {
     console.log(error);
     return <div>Error fetching brands</div>;
   }
-}
+};
 
 export default Home;

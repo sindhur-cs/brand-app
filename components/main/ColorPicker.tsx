@@ -1,12 +1,16 @@
-import { useState } from 'react'
-import { HexColorPicker } from "react-colorful"
-import { Palette } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useState } from "react";
+import { HexColorPicker } from "react-colorful";
+import { Palette } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface ColorPickerProps {
-  value: string[]
-  onChange: (colors: string[]) => void
+  value: string[];
+  onChange: (colors: string[]) => void;
 }
 
 export default function ColorPicker({ value, onChange }: ColorPickerProps) {
@@ -15,15 +19,14 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
 
   const addColor = (newColor: string) => {
     if (!value.includes(newColor)) {
-      console.log(newColor);
       onChange([...value, newColor]);
       setIsOpen(false);
     }
-  }
+  };
 
   const removeColor = (colorToRemove: string) => {
-    onChange(value.filter((c) => c !== colorToRemove))
-  }
+    onChange(value.filter((c) => c !== colorToRemove));
+  };
 
   return (
     <div className="space-y-4">
@@ -41,24 +44,15 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
         {
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-12 h-12 p-0 rounded-full"
-              >
+              <Button variant="outline" className="w-12 h-12 p-0 rounded-full">
                 <Palette className="w-6 h-6" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-3" align="start">
               <div>
-                <HexColorPicker
-                  color={color}
-                  onChange={setColor}
-                />
+                <HexColorPicker color={color} onChange={setColor} />
                 <div className="mt-4 flex justify-end">
-                  <Button
-                    size="sm"
-                    onClick={() => addColor(color)}
-                  >
+                  <Button size="sm" onClick={() => addColor(color)}>
                     Add Color
                   </Button>
                 </div>
@@ -68,6 +62,5 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
         }
       </div>
     </div>
-  )
+  );
 }
-
