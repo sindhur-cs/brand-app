@@ -15,9 +15,8 @@ const DragDrop = () => {
   })
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if(file) {
-      setSelectedImage(file);
+    if(e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
     }
   }
 

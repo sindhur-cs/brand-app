@@ -11,27 +11,32 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
-const chartData = [
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-]
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+import useStore from "@/app/store/store"
 
 export default function Progress() {
+  const { chatAnalysis } = useStore();
+  const jsonChatAnalysis = JSON.parse(chatAnalysis || "{}");
+  const score = jsonChatAnalysis?.brand_compliance_score;
+
+  const chartData = [
+    { browser: "safari", visitors: 200, fill: score > 70 ? "green" : score > 40 ? "yellow" : "red" },
+  ]
+  
+  const chartConfig = {
+    visitors: {
+      label: "Visitors",
+    },
+    safari: {
+      label: "Safari",
+      color: "hsl(var(--chart-2))",
+    },
+  } satisfies ChartConfig
+
   return (
     <Card className="flex flex-col my-[60px] py-10">
       <CardHeader className="items-center pb-0">
@@ -45,7 +50,7 @@ export default function Progress() {
           <RadialBarChart
             data={chartData}
             startAngle={0}
-            endAngle={250}
+            endAngle={(360 * (score || 0)) / 100}
             innerRadius={80}
             outerRadius={110}
           >
@@ -56,7 +61,7 @@ export default function Progress() {
               className="first:fill-muted last:fill-background"
               polarRadius={[86, 74]}
             />
-            <RadialBar dataKey="visitors" background cornerRadius={10} />
+            <RadialBar dataKey="visitors" background cornerRadius={10}/>
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
                 content={({ viewBox }) => {
@@ -73,7 +78,7 @@ export default function Progress() {
                           y={viewBox.cy}
                           className="fill-foreground text-4xl font-bold"
                         >
-                          {"70%"}
+                          {`${score || 0}%`}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
@@ -93,7 +98,7 @@ export default function Progress() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-            The image has a brand relevancy score of 70%
+            The image has a brand relevancy score of {score || 0}%
         </div>
       </CardFooter>
     </Card>

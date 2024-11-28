@@ -18,7 +18,7 @@ const SelectionComponent = () => {
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    {brands.length > 0 && brands.map((brand) => <SelectItem className="cursor-pointer p-2 m-1 hover:bg-gray-100 rounded-lg" key={brand.id} value={brand.name}>{brand.name}</SelectItem>)}
+                    {brands.length > 0 && brands.map((brand) => <SelectItem className="cursor-pointer p-2 m-1 hover:bg-gray-100 rounded-lg" key={brand.uid} value={brand.name}>{brand.name}</SelectItem>)}
                 </SelectGroup>
             </SelectContent>
         </Select>

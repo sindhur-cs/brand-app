@@ -13,9 +13,10 @@ const BrandsList = ({ brands }: { brands: any[] }) => {
 
     return (
         <div className="flex flex-wrap gap-4 py-10">
-            {brands.map((brand: any) => (
-                <BrandProfileCard key={brand.id} name={brand.name} description={brand.description} />
-            ))}
+            {brands.length > 0 ? brands.map((brand: any) => {
+                console.log(brand.uid);
+                return <BrandProfileCard key={brand.uid} uid={brand.uid} name={brand.name} image={brand.reference_images[0]}/>
+            }) : <div className="flex justify-center text-lg w-full items-center h-[30vh]">No brands found. Please create a new brand.</div>}
         </div>
     )
 }

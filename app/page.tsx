@@ -1,13 +1,12 @@
 import BrandsList from "@/components/main/BrandsList";
 import { Button } from "@/components/ui/button";
+import { fetchBrands } from "@/sdk";
 import { PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
 const Home = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/api/v1/brands/`);
-    const { brands } = await response.json();
-
+    const brands = await fetchBrands();
     console.log(brands);
 
     return (
@@ -20,11 +19,11 @@ const Home = async () => {
             </Button>
           </Link>
         </div>
-        <BrandsList brands={brands} />
+        {(brands.entries) && <BrandsList brands={brands.entries} />}
       </div>
     )
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return <div>Error fetching brands</div>;
   }
 }

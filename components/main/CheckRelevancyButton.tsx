@@ -7,6 +7,7 @@ import useStore from "@/app/store/store";
 const CheckRelevancyButton = () => {
   const router = useRouter();
   const { selectedBrand, selectedImage } = useStore();
+  const { setChatAnalysis } = useStore();
 
   const handleCheckRelevancy = async () => {
     if(!selectedImage || !selectedBrand) {
@@ -17,14 +18,18 @@ const CheckRelevancyButton = () => {
     console.log(selectedImage, selectedBrand);
 
     try {
+
+      const formData = new FormData();
+      formData.append("image", selectedImage);
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/api/v1/analyze-brand-compliance?brand_id=${selectedBrand}`, {
         method: "POST",
-        body: JSON.stringify({
-          image: selectedImage
-        })
+        body: formData
       });
       const data = await response.json();
-      console.log(data);
+      const analysisData = data.chat_analysis;
+      console.log("Here is the analysis data", analysisData);
+      setChatAnalysis(analysisData);
       router.push("/assess-result");
     } catch (error) {
       console.log(error);
