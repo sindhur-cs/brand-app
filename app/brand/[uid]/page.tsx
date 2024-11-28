@@ -1,3 +1,5 @@
+import MarkdownRenderer from "@/components/main/MarkdownRenderer";
+import Markdown from "react-markdown"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchParticularBrand } from "@/sdk";
 import { ClipboardList, ImageIcon } from "lucide-react";
@@ -16,7 +18,7 @@ const BrandDetails = async ({ params }: { params: { uid: string }  }) => {
     console.log((await params).uid);
     const brand: any = await fetchParticularBrand((await params).uid);
 
-    console.log(brand);
+    // console.log(JSON.parse(brand));
 
     return (
       <div className="flex flex-col gap-8 max-w-2xl mx-auto">
@@ -31,12 +33,13 @@ const BrandDetails = async ({ params }: { params: { uid: string }  }) => {
               Brand Guidelines
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              {brand.guidelines}
-            </p>
+          <CardContent className="flex w-10">
+        <Markdown>{brand.guidelines}</Markdown>
+            {/* <MarkdownRenderer content={brand.guidelines} /> */}
           </CardContent>
         </Card>
+        {/* <MarkdownRenderer content={brand.guidelines} /> */}
+        {/* <Markdown>{brand.guidelines}</Markdown> */}
 
         {/* Reference Images */}
         <Card>
