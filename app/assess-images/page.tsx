@@ -13,7 +13,7 @@ const AssessImages = () => {
                 <DragDrop />
                 <SelectionComponent/>
             </div>
-            <CheckRelevancyButton/>
+            <CheckRelevancyButton />
         </div>
     </div>
   )

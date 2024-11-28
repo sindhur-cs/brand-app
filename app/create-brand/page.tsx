@@ -13,11 +13,12 @@ import zod from "zod";
 const createBrandSchema = zod.object({
     name: zod.string().min(1, { message: "Brand name is required" }),
     description: zod.string().min(100, { message: "Characters in the brand requirement should be greater than 100" }),
-    values: zod.array(zod.string()).optional(),
-    attributes: zod.array(zod.string()).optional(),
-    "primary-font": zod.string(),
-    "secondary-font": zod.string(),
+    voices: zod.array(zod.string()).optional(),
+    typography: zod.string().min(1, { message: "Brand typography is required" }),
+    imageGuidelines: zod.string().min(1, { message: "Image guidelines are required" }),
     colors: zod.array(zod.string()),
+    dos: zod.string().min(1, { message: "Brand do's are required" }),
+    donts: zod.string().min(1, { message: "Brand don'ts are required" }),
     images: zod.array(zod.string())
 });
 
@@ -29,10 +30,11 @@ const CreateBrand = () => {
         defaultValues: {
             name: "",
             description: "",
-            values: [],
-            attributes: [],
-            "primary-font": "",
-            "secondary-font": "",
+            voices: [],
+            typography: "",
+            imageGuidelines: "",
+            dos: "",
+            donts: "",
             colors: [],
             images: []
         }
@@ -85,13 +87,13 @@ const CreateBrand = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="values"
+                        name="voices"
                         render={() => (
                             <FormItem>
-                                <FormLabel>Brand Values</FormLabel>
+                                <FormLabel>Brand Voice</FormLabel>
                                 <FormControl>
                                     <Controller 
-                                        name="values"
+                                        name="voices"
                                         control={form.control}
                                         render={({ field }) => (
                                             <KeywordInput value={field.value} onChange={field.onChange} placeholder="Enter the brand values"/>
@@ -99,43 +101,22 @@ const CreateBrand = () => {
                                     />
                                 </FormControl>
                                 <FormDescription>
-                                    Provide some brief values of your brand.
+                                    Provide some voices of your brand.
                                 </FormDescription>
                             </FormItem>
                         )}
                     />
                     <FormField
                         control={form.control}
-                        name="attributes"
-                        render={() => (
-                            <FormItem>
-                                <FormLabel>Brand Attributes</FormLabel>
-                                <FormControl>
-                                    <Controller 
-                                        name="attributes"
-                                        control={form.control}
-                                        render={({ field }) => (
-                                            <KeywordInput value={field.value} onChange={field.onChange} placeholder="Enter the brand attributes"/>
-                                        )}
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                    Provide some brief attributes of your brand.
-                                </FormDescription>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="primary-font"
+                        name="typography"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Primary Font *</FormLabel>
+                                <FormLabel>Typography *</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter primary font name" {...field} />
+                                    <Input placeholder="Enter brand typography" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is your brand's primary font.
+                                    This is your brand's typography.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -143,26 +124,62 @@ const CreateBrand = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="secondary-font"
+                        name="imageGuidelines"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Secondary Font *</FormLabel>
+                                <FormLabel>Image guidelines *</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter secondary font name" {...field} />
+                                    <Input placeholder="Enter image guidelines" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is your brand's secondary font.
+                                    This is the image guidelines.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+                    <div className="flex w-full gap-4">
+                    <FormField
+                        control={form.control}
+                        name="dos"
+                        render={({ field }) => (
+                        <FormItem className="w-1/2">
+                            <FormLabel>Dos</FormLabel>
+                            <FormControl>
+                            <Textarea
+                                placeholder="Enter brand do's..."
+                                className="min-h-[200px] border-green-200 focus-visible:ring-green-500"
+                                {...field}
+                            />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="donts"
+                        render={({ field }) => (
+                        <FormItem className="w-1/2">
+                            <FormLabel>Donts</FormLabel>
+                            <FormControl>
+                            <Textarea
+                                placeholder="Enter brand don'ts..."
+                                className="min-h-[200px] border-red-200 focus-visible:ring-red-500"
+                                {...field}
+                            />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                    />
+                    </div>
                     <FormField
                         control={form.control}
                         name="colors"
                         render={() => (
                             <FormItem>
-                                <FormLabel>Pick the color palette*</FormLabel>
+                                <FormLabel>Pick the color palette *</FormLabel>
                                 <FormControl>
                                     <Controller 
                                         name="colors"
@@ -181,13 +198,13 @@ const CreateBrand = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="colors"
+                        name="images"
                         render={() => (
                             <FormItem>
                                 <FormLabel>Pick the images *</FormLabel>
                                 <FormControl>
                                     <Controller 
-                                        name="colors"
+                                        name="images"
                                         control={form.control}
                                         render={({ field }) => (
                                             <ImagePicker value={field.value} onChange={field.onChange}/>
